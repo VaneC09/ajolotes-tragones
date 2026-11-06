@@ -37,24 +37,25 @@ window.addEventListener('keydown', (e) => {
   if (keyMap[e.key]) socket.emit('changeDirection', keyMap[e.key]);
 });
 
-// Evento que actualiza el Top 10 en tiempo real
+// Evento que actualiza el Top 10 en tiempo real al finalizar partidas
 socket.on('updateTop10', (scores) => {
   const list = document.getElementById('top10List');
   if (!scores || scores.length === 0) {
     list.innerHTML = `<li style="color: #776b94;">Sin puntajes aún</li>`;
     return;
   }
-  list.innerHTML = scores.map(item => `<li><b>${item.player_name}</b>: ${item.score} pts</li>`).join('');
+  list.innerHTML = scores.map(item => `<li><b>${item.player_name || item.name}</b>: ${item.score} pts</li>`).join('');
 });
 
+// Evento que renderiza el canvas y muestra los ajolotes en tiempo real
 socket.on('updateState', ({ players, food }) => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Dibujar comida
+  // 1. Dibujar comida
   ctx.font = '16px serif';
   ctx.fillText(food.type, food.x * TILE_SIZE + 2, food.y * TILE_SIZE + 16);
 
-  // Dibujar Ajolotes
+  // 2. Dibujar Ajolotes
   for (let id in players) {
     let p = players[id];
     
@@ -110,7 +111,7 @@ function sendDir(x, y) {
   socket.emit('changeDirection', { x, y });
 }
 
-// Opcional: Control deslizando el dedo sobre el Canvas (Swipes)
+// Control táctil deslizando el dedo sobre el Canvas (Swipes)
 let touchStartX = 0;
 let touchStartY = 0;
 
