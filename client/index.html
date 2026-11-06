@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Ajolotes Tragones 🇲🇽</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>🇲🇽 Ajolotes Tragones 🇲🇽</h1>
+    
+    <div id="login">
+      <div class="form-group">
+        <label for="playerName">Nombre de tu Ajolote</label>
+        <input type="text" id="playerName" placeholder="Ej. AjolotePro" maxlength="15">
+      </div>
+
+      <div class="form-group">
+        <label for="roomCode">Código de Sala</label>
+        <input type="text" id="roomCode" placeholder="MEXA" maxlength="6" style="text-transform:uppercase;">
+      </div>
+
+      <div class="form-group">
+        <label>Color de tu Ajolote</label>
+        <div class="color-picker-wrapper">
+          <input type="color" id="colorPicker" value="#FF007F">
+          <span style="font-size: 0.85rem; color: #a090c0;">Elige tu tono favorito</span>
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="startGame()">¡Entrar a la Sala!</button>
+    </div>
+
+    <div id="gameArea" style="display:none;">
+      <div class="game-card">
+        <div class="room-info">
+          <span class="room-badge">Sala: <b id="displayRoom">MEXA</b></span>
+          <button class="btn-secondary" onclick="copyInviteLink()">📋 Copiar Link</button>
+        </div>
+        
+        <canvas id="gameCanvas" width="400" height="400"></canvas>
+
+        <!-- Controles Táctiles D-Pad para Celulares -->
+        <div id="touchControls">
+          <button class="dbtn up" onclick="sendDir(0, -1)">▲</button>
+          <div class="dpad-middle">
+            <button class="dbtn left" onclick="sendDir(-1, 0)">◄</button>
+            <button class="dbtn right" onclick="sendDir(1, 0)">►</button>
+          </div>
+          <button class="dbtn down" onclick="sendDir(0, 1)">▼</button>
+        </div>
+      </div>
+
+      <div class="game-card" id="scoreboard">
+        <h3>🏆 Top 10 Mejores Ajolotes</h3>
+        <ol id="top10List">
+          <li style="color: #776b94;">Sin puntajes aún</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <script src="game.js"></script>
+</body>
+</html>
