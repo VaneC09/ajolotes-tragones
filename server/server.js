@@ -85,6 +85,7 @@ io.on('connection', async (socket) => {
   });
 });
 
+// Control de velocidad del juego (a mayor número, más calmado y fluido se mueve)
 setInterval(async () => {
   for (let code in rooms) {
     let room = rooms[code];
@@ -120,7 +121,7 @@ setInterval(async () => {
 
     io.to(code).emit('updateState', room);
   }
-}, 250);
+}, 300);
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log(`🚀 Servidor listo en puerto ${PORT}`));
