@@ -120,7 +120,7 @@ setInterval(async () => {
 
     io.to(code).emit('updateState', room);
   }
-}, 180);
+}, 250);
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log(`🚀 Servidor listo en puerto ${PORT}`));
